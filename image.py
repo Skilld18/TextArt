@@ -1,10 +1,14 @@
 #!/usr/bin/python
 import os
 import sys
-
+import subprocess
 from PIL import Image
-    
+
 def draw(im):
+   subprocess.check_call(["clear", ""])
+
+   #convert to rgb
+   im = im.convert("RGB")
    #get terminal size
    rows, columns = os.popen('stty size', 'r').read().split()
    size = (int(rows), int(columns))
@@ -13,7 +17,8 @@ def draw(im):
    #*2 deals with the fact that unicode blockchars are 2x1 rectables
    im = im.resize((im.size[0],im.size[1]*2))
    #thumbnail scales while perserving aspect ratio
-   im.thumbnail(size)
+   im = im.resize((int(rows),int(columns)), Image.ANTIALIAS)
+
 
    for x in range(im.size[0]):
       for y in range(im.size[1]-1,-1,-1):
