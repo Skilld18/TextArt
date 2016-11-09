@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
 project(draw)
 find_package(OpenCV REQUIRED )
-find_package(Curses REQUIRED )
-add_executable(draw main.cc)
+add_executable(draw main.cpp video.cpp video.h image.cpp utils.cpp utils.h image.h)
 target_link_libraries(draw ${OpenCV_LIBS} )
-target_link_libraries(draw ${CURSES_LIBRARIES} )
