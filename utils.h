@@ -9,7 +9,7 @@ enum FileType{
     IMG, //Pictures like jpg and png
     VID, //Videos like mp4
     DOC, //PDFs and the like that can be converted to imgs
-    DIRE, //A directory
+    DIR, //A directory
     TXT, //Text and binary files that this program can't do anything to
     NONE, //Can't be opened or does't exist
 };
@@ -20,4 +20,5 @@ const string doc_types[] = {".pdf", ".doc"};
 FileType getFileType(string filename);
 void printFile(string filename);
 void getTerminalSize(int &termWidth, int &termHeight);
+
 #endif //TEXTART_UTILS_H

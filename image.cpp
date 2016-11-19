@@ -12,7 +12,7 @@ string matToPixels(Mat mat) {
     for (int i = 0; i < mat.size().height; i++) {
         for (int j = 0; j< mat.size().width; j++) {
             Vec3b intensity = mat.at<Vec3b>(i, j);
-            t += createPixel(intensity, "a");
+                t += createPixel(intensity, "\u25AF");
         }
         t += '\n';
     }

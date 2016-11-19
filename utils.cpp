@@ -47,7 +47,7 @@ FileType getFileType(string filename) {
     else if (contains(getFileExt(filename), doc_types))
         return DOC;
     else if (isDirectory(filename))
-        return DIRE;
+        return DIR;
     else if (fileExists(filename))
         return TXT;
     return NONE;
