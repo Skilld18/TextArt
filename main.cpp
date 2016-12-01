@@ -63,7 +63,11 @@ int main(int argc, char *argv[]) {
     if (ft == VID) {
         VideoCapture capture;
         capture.open(filename);
-        for (; ;) {
+        for (;;) {
+            bool success = capture.read(img);
+            if (!success) {
+                return 0;
+            }
             capture >> img;
             resize(img, dst, Size(termWidth, termHeight));
             cout << matToPixels(dst);
