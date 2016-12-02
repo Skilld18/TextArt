@@ -98,7 +98,7 @@ char getch(){
     return buf;
 }
 
-string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *interactive, FileType *fileType){
+string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *interactive, bool *writeToFile, FileType *fileType){
     string filename = "";
     for(int i = 0;i<argc;i++){
         //manual or automatic type logic, auto is still hacky
@@ -126,6 +126,9 @@ string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *inte
         }
         if(strcmp(argv[i],"-i")==0){
             *interactive = true;
+        }
+        if(strcmp(argv[i],"-write")==0){
+            *writeToFile= true;
         }
     }
     return filename;

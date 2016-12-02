@@ -3,6 +3,9 @@
 #include <opencv2/opencv.hpp>
 #include "image.h"
 #include "utils.h"
+#include <string>
+#include <sstream>
+
 
 
 //TODO:: Attempt to compensate for font width vs height
@@ -14,7 +17,9 @@ float fontWidth = 0.6;
 float zoom_ratio = 1.0;
 int panX = 0;
 int panY = 0;
-int frame = 0;
+int imgHeight = 100;
+int imgWidth = 100;
+int frame = -1;
 
 
 using namespace ::cv;
@@ -47,7 +52,8 @@ int main(int argc, char *argv[]) {
     FileType ft = NONE;
     bool preserveAspectRatio = false;
     bool interactive = false;
-    String filename = setOptions(argc, argv, &preserveAspectRatio, &interactive, &ft);
+    bool writeToFile = false;
+    String filename = setOptions(argc, argv, &preserveAspectRatio, &interactive, &writeToFile, &ft);
 
     if (ft == VID) {
         capture.open(filename);
@@ -64,9 +70,11 @@ int main(int argc, char *argv[]) {
                 return 0;
             }
             capture >> img;
+            frame++;
         }
             //This will convert doc files to tmp-0.png tmp-1.png etc.
         else if (ft == DOC) {
+            frame++;
             string cmd = "convert " + filename + " tmp.png";
             system(cmd.c_str());
             char buffer[10];
@@ -74,6 +82,7 @@ int main(int argc, char *argv[]) {
             img = imread("tmp-" + (string) buffer + ".png", CV_LOAD_IMAGE_COLOR);
         }
         else if (ft == IMG) {
+            frame = 0;
             img = imread(filename, CV_LOAD_IMAGE_COLOR);
         }
         else if (ft == TXT) {
@@ -83,21 +92,46 @@ int main(int argc, char *argv[]) {
             cout << "That's not a valid file!" << endl;
             return 1;
         }
-        //TODO:: Write to file for motd
         resize(img, dst, Size(termWidth, termHeight));
         cout << matToPixels(dst);
-        std::ofstream outFile;
-        outFile.open("motd");
-        outFile << matToPixels(dst);
+
+        if(writeToFile){
+            char buffer[10];
+            snprintf(buffer, 10, "%d", frame);
+            string outFileName = filename + "-textart" + buffer;
+            ofstream outFile;
+            outFile.open(outFileName.c_str());
+            outFile << matToPixels(dst);
+        }
 
 
         //TODO:: Deal with multiple pages
         //TODO:: Paging textfiles
         if (interactive) {
-            getch();
+            char input = getch();
+            if (input == ' '){
+                frame++;
+            }
+            else if(input=='j'){
+                panY += imgHeight;
+            }
+            else if(input=='k') {
+                panY -= imgHeight;
+            }
+            else if(input=='h'){
+                panX-= imgWidth;
+            }
+            else if(input=='l'){
+                panY-= imgWidth;
+            }
+            else if(input=='-'){
+                zoom_ratio /= 1.5;
+            }
+            else if(input=='+'){
+                zoom_ratio *= 1.5;
+            }
         }
     } while (ft == VID || interactive);
-
 
     return 0;
 }

@@ -21,6 +21,6 @@ FileType getFileType(string filename);
 void printFile(string filename);
 void getTerminalSize(int &termWidth, int &termHeight);
 char getch();
-string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *interactive, FileType *fileType);
+string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *interactive, bool *writeToFile, FileType *fileType);
 
 #endif //TEXTART_UTILS_H
