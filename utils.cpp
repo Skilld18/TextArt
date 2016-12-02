@@ -6,6 +6,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string>
+#include <string.h>
+#include <termios.h>
+#include <stdio.h>
+
 
 
 
@@ -38,7 +42,7 @@ bool contains(string s1, const string s2[]) {
     return false;
 }
 
-//TODO:: I've yet to find a consistent way to do this so ...
+//I've yet to find a good way to do this so ...
 FileType getFileType(string filename) {
     if (contains(getFileExt(filename), image_types))
         return IMG;
@@ -71,3 +75,59 @@ void printFile(string filename) {
         myfile.close();
     }
 }
+
+char getch(){
+    char buf=0;
+    struct termios old={0};
+    fflush(stdout);
+    if(tcgetattr(0, &old)<0)
+        perror("tcsetattr()");
+    old.c_lflag&=~ICANON;
+    old.c_lflag&=~ECHO;
+    old.c_cc[VMIN]=1;
+    old.c_cc[VTIME]=0;
+    if(tcsetattr(0, TCSANOW, &old)<0)
+        perror("tcsetattr ICANON");
+    if(read(0,&buf,1)<0)
+        perror("read()");
+    old.c_lflag|=ICANON;
+    old.c_lflag|=ECHO;
+    if(tcsetattr(0, TCSADRAIN, &old)<0)
+        perror ("tcsetattr ~ICANON");
+    printf("%c\n",buf);
+    return buf;
+}
+
+string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *interactive, FileType *fileType){
+    string filename = "";
+    for(int i = 0;i<argc;i++){
+        //manual or automatic type logic, auto is still hacky
+        if(strcmp(argv[i],"-image")==0){
+            *fileType = IMG;
+        }
+        else if(strcmp(argv[i],"-video")==0){
+            *fileType = IMG;
+        }
+        else if(strcmp(argv[i],"-doc")==0){
+            *fileType = DOC;
+        }
+        else if(strcmp(argv[i],"-dir")==0){
+            *fileType = DIR;
+        }
+        else if(strcmp(argv[i],"-dir")==0){
+            *fileType = TXT;
+        }
+        else if(argv[i][0] != '-'){
+            filename = argv[i];
+            *fileType = getFileType(filename);
+        }
+        if(strcmp(argv[i],"-par")==0){
+            *preserveAspectRatio = true;
+        }
+        if(strcmp(argv[i],"-i")==0){
+            *interactive = true;
+        }
+    }
+    return filename;
+}
+
