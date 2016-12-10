@@ -19,13 +19,21 @@ int panX = 0;
 int panY = 0;
 int imgHeight = 100;
 int imgWidth = 100;
-int frame = -1;
+int frame = 0;
 
 
 using namespace ::cv;
 using namespace ::std;
 
-//TODO:: Find a way to exit without user input
+
+//Example for passing in a function that can use different strings in the picture
+string charAtPos(int i, int j) {
+    if (i < 5 && j < 5) {
+        return "t";
+    }
+    return "x";
+}
+
 //TODO:: Get data on render time
 int main(int argc, char *argv[]) {
 
@@ -39,7 +47,7 @@ int main(int argc, char *argv[]) {
     //Setup Screen
     int termWidth, termHeight;
     getTerminalSize(termWidth, termHeight);
-    system("setterm -cursor off");
+//    system("setterm -cursor off");
     //    system ("/bin/stty cooked");
     //    system("export PS1=\"\"");
 
@@ -74,63 +82,43 @@ int main(int argc, char *argv[]) {
         }
             //This will convert doc files to tmp-0.png tmp-1.png etc.
         else if (ft == DOC) {
-            frame++;
             string cmd = "convert " + filename + " tmp.png";
             system(cmd.c_str());
             char buffer[10];
             snprintf(buffer, 10, "%d", frame);
             img = imread("tmp-" + (string) buffer + ".png", CV_LOAD_IMAGE_COLOR);
+            frame++;
         }
         else if (ft == IMG) {
-            frame = 0;
             img = imread(filename, CV_LOAD_IMAGE_COLOR);
         }
         else if (ft == TXT) {
-            printFile(filename);
+            printFile(filename, frame * termHeight, (frame + 1) * termHeight);
         }
         else {
             cout << "That's not a valid file!" << endl;
             return 1;
         }
-        resize(img, dst, Size(termWidth, termHeight));
-        cout << matToPixels(dst);
-
-        if(writeToFile){
-            char buffer[10];
-            snprintf(buffer, 10, "%d", frame);
-            string outFileName = filename + "-textart" + buffer;
-            ofstream outFile;
-            outFile.open(outFileName.c_str());
-            outFile << matToPixels(dst);
+        if (ft != TXT) {
+            //TODO:: Get ROI rectangle
+            resize(img, dst, Size(termWidth, termHeight));
+            cout << matToPixels(dst, charAtPos);
+            if (writeToFile) {
+                char buffer[10];
+                snprintf(buffer, 10, "%d", frame);
+                string outFileName = filename + "-textart" + buffer;
+                ofstream outFile;
+                outFile.open(outFileName.c_str());
+                outFile << matToPixels(dst);
+            }
         }
 
 
         //TODO:: Deal with multiple pages
-        //TODO:: Paging textfiles
         if (interactive) {
-            char input = getch();
-            if (input == ' '){
-                frame++;
-            }
-            else if(input=='j'){
-                panY += imgHeight;
-            }
-            else if(input=='k') {
-                panY -= imgHeight;
-            }
-            else if(input=='h'){
-                panX-= imgWidth;
-            }
-            else if(input=='l'){
-                panY-= imgWidth;
-            }
-            else if(input=='-'){
-                zoom_ratio /= 1.5;
-            }
-            else if(input=='+'){
-                zoom_ratio *= 1.5;
-            }
+            userInput(&frame, &panX, &panY, &zoom_ratio, imgWidth, imgHeight);
         }
+
     } while (ft == VID || interactive);
 
     return 0;

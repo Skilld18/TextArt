@@ -18,9 +18,9 @@ const string image_types[] = {".jpg", ".png"};
 const string vid_types[] = {".mp4", ".avi"};
 const string doc_types[] = {".pdf", ".doc"};
 FileType getFileType(string filename);
-void printFile(string filename);
+void printFile(string filename, int start, int end);
 void getTerminalSize(int &termWidth, int &termHeight);
 char getch();
 string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *interactive, bool *writeToFile, FileType *fileType);
-
+void userInput(int *frame, int *panX, int *panY, float *zoom_ratio, int imgWidth, int imgHeight);
 #endif //TEXTART_UTILS_H

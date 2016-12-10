@@ -65,12 +65,17 @@ void getTerminalSize(int &termWidth, int &termHeight) {
     termHeight = size.ws_row;
 }
 
-void printFile(string filename) {
+//TODO:: Bounds checking
+void printFile(string filename, int start, int end) {
     string line;
+    int i = 0;
     ifstream myfile(filename.c_str());
     if (myfile.is_open()) {
         while (getline(myfile, line)) {
-            cout << line << '\n';
+            if (i>=start && i<end) {
+                cout << line << '\n';
+            }
+            i++;
         }
         myfile.close();
     }
@@ -132,5 +137,34 @@ string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *inte
         }
     }
     return filename;
+}
+
+//TODO:: Add bounds checks
+void userInput(int *frame, int *panX, int *panY, float *zoom_ratio, int imgWidth, int imgHeight){
+    char input = getch();
+    if (input == 'f'){
+        *frame += 1;
+    }
+    else if (input == 'b'){
+        *frame -= 1;
+    }
+    else if(input=='j'){
+        *panY += imgHeight/2;
+    }
+    else if(input=='k') {
+        *panY -= imgHeight/2;
+    }
+    else if(input=='h'){
+        *panX-= imgWidth/2;
+    }
+    else if(input=='l'){
+        *panY-= imgWidth/2;
+    }
+    else if(input=='-'){
+        *zoom_ratio /= 1.5;
+    }
+    else if(input=='+'){
+        *zoom_ratio *= 1.5;
+    }
 }
 

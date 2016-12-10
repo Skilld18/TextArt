@@ -6,13 +6,24 @@ string createPixel(Vec3b colour, string glyph) {
     return pixel.str();
 }
 
-//TODO:: Glyph rules
+string returnBlock(string ch){
+    return ch;
+}
+
 string matToPixels(Mat mat) {
+    return matToPixels(mat, returnBlock("\u25AF"));
+}
+
+string matToPixels(Mat mat, string c) {
+    return matToPixels(mat, returnBlock(c));
+}
+
+string matToPixels(Mat mat, string (*charAtPos)(int, int)) {
     string t;
     for (int i = 0; i < mat.size().height; i++) {
         for (int j = 0; j< mat.size().width; j++) {
             Vec3b intensity = mat.at<Vec3b>(i, j);
-                t += createPixel(intensity, "\u25AF");
+                t += createPixel(intensity, charAtPos(i,j));
         }
         t += '\n';
     }

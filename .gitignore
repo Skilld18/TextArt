@@ -8,3 +8,5 @@ Makefile
 *.cmake
 CMakeCache.txt
 CMakeFiles
+*.pdf
+draw.cbp
