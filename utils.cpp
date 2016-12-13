@@ -5,12 +5,7 @@
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <string>
-#include <string.h>
 #include <termios.h>
-#include <stdio.h>
-
-
 
 
 int isDirectory(string filename) {
@@ -28,13 +23,13 @@ bool fileExists(const std::string &name) {
 string getFileExt(const string &s) {
     size_t i = s.rfind('.', s.length());
     if (i != string::npos) {
-        return (s.substr(i + 1, s.length() - i));
+        return (s.substr(i, s.length() - i));
     }
     return ("");
 }
 
 bool contains(string s1, const string s2[]) {
-    for (int i = 0; i < sizeof(s2) / sizeof(s2[0]); i++) {
+    for (int i = 0; i < s2->size(); i++) {
         if (s2[0].find(s1) != string::npos) {
             return true;
         }
@@ -61,8 +56,9 @@ FileType getFileType(string filename) {
 void getTerminalSize(int &termWidth, int &termHeight) {
     struct winsize size;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
-    termWidth = size.ws_col;
-    termHeight = size.ws_row;
+    //Some terminals return 0 for this so for now set a lower bound
+    termWidth = max((int)size.ws_col, 80);
+    termHeight = max((int)size.ws_row, 24);
 }
 
 //TODO:: Bounds checking
@@ -103,36 +99,36 @@ char getch(){
     return buf;
 }
 
-string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *interactive, bool *writeToFile, FileType *fileType){
+string setOptions(vector<string> args, bool *preserveAspectRatio, bool *interactive, bool *writeToFile, FileType *fileType){
     string filename = "";
-    for(int i = 0;i<argc;i++){
+    for(int i = 1;i<args.size();i++){
         //manual or automatic type logic, auto is still hacky
-        if(strcmp(argv[i],"-image")==0){
+        if(args.at(i) == "-image"){
             *fileType = IMG;
         }
-        else if(strcmp(argv[i],"-video")==0){
+        else if(args.at(i)=="-video"){
             *fileType = IMG;
         }
-        else if(strcmp(argv[i],"-doc")==0){
+        else if(args.at(i)=="-doc"){
             *fileType = DOC;
         }
-        else if(strcmp(argv[i],"-dir")==0){
+        else if(args.at(i)=="-dir"){
             *fileType = DIR;
         }
-        else if(strcmp(argv[i],"-dir")==0){
+        else if(args.at(i)=="-dir"){
             *fileType = TXT;
         }
-        else if(argv[i][0] != '-'){
-            filename = argv[i];
+        else if(args.at(i)[0] != '-'){
+            filename = args.at(i);
             *fileType = getFileType(filename);
         }
-        if(strcmp(argv[i],"-par")==0){
+        if(args.at(i)=="-par"){
             *preserveAspectRatio = true;
         }
-        if(strcmp(argv[i],"-i")==0){
+        if(args.at(i)=="-i"){
             *interactive = true;
         }
-        if(strcmp(argv[i],"-write")==0){
+        if(args.at(i)=="-write"){
             *writeToFile= true;
         }
     }

@@ -2,6 +2,7 @@
 #define TEXTART_UTILS_H
 
 #include <string>
+#include <vector>
 
 using namespace ::std;
 
@@ -21,6 +22,6 @@ FileType getFileType(string filename);
 void printFile(string filename, int start, int end);
 void getTerminalSize(int &termWidth, int &termHeight);
 char getch();
-string setOptions(int argc, char * argv[], bool *preserveAspectRatio, bool *interactive, bool *writeToFile, FileType *fileType);
+string setOptions(vector<string> args, bool *preserveAspectRatio, bool *interactive, bool *writeToFile, FileType *fileType);
 void userInput(int *frame, int *panX, int *panY, float *zoom_ratio, int imgWidth, int imgHeight);
 #endif //TEXTART_UTILS_H

@@ -3,8 +3,6 @@
 #include <opencv2/opencv.hpp>
 #include "image.h"
 #include "utils.h"
-#include <string>
-#include <sstream>
 
 
 
@@ -61,7 +59,9 @@ int main(int argc, char *argv[]) {
     bool preserveAspectRatio = false;
     bool interactive = false;
     bool writeToFile = false;
-    String filename = setOptions(argc, argv, &preserveAspectRatio, &interactive, &writeToFile, &ft);
+    vector<string> allArgs(argv, argv + argc);
+
+    String filename = setOptions(allArgs, &preserveAspectRatio, &interactive, &writeToFile, &ft);
 
     if (ft == VID) {
         capture.open(filename);
@@ -69,9 +69,8 @@ int main(int argc, char *argv[]) {
 
     do {
         //Initializing files so they will work with the program
-        //TODO:: Refine this
-        //TODO:: Video Jumps??
-        //TODO:: Load into buffer
+        //TODO:: Some times the Video Jumps up and down a line fix that
+        //TODO:: Is performance improved if the whole video is loaded into a buffer?
         if (ft == VID) {
             bool success = capture.read(img);
             if (!success) {
@@ -80,7 +79,7 @@ int main(int argc, char *argv[]) {
             capture >> img;
             frame++;
         }
-            //This will convert doc files to tmp-0.png tmp-1.png etc.
+        //This will convert doc files to tmp-0.png tmp-1.png etc.
         else if (ft == DOC) {
             string cmd = "convert " + filename + " tmp.png";
             system(cmd.c_str());
@@ -114,7 +113,6 @@ int main(int argc, char *argv[]) {
         }
 
 
-        //TODO:: Deal with multiple pages
         if (interactive) {
             userInput(&frame, &panX, &panY, &zoom_ratio, imgWidth, imgHeight);
         }

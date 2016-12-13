@@ -18,6 +18,8 @@ string matToPixels(Mat mat, string c) {
     return matToPixels(mat, returnBlock(c));
 }
 
+//TODO:: Deal with terminals with limited colour
+//TODO:: Filters? Effects?
 string matToPixels(Mat mat, string (*charAtPos)(int, int)) {
     string t;
     for (int i = 0; i < mat.size().height; i++) {
