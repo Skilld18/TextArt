@@ -118,7 +118,7 @@ string setOptions(vector<string> args, bool *preserveAspectRatio, bool *interact
         else if(args.at(i)=="-dir"){
             *fileType = TXT;
         }
-        else if(args.at(i)[0] != '-'){
+        else if(args.at(i)[0] != '-' && filename == ""){
             filename = args.at(i);
             *fileType = getFileType(filename);
         }

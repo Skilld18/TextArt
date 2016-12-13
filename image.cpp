@@ -2,7 +2,9 @@
 
 string createPixel(Vec3b colour, string glyph) {
     stringstream pixel;
-    pixel << "\x1b[38;2;" << (int)colour[2] << ";" << (int)colour[1] << ";" << (int)colour[0] << "m" << glyph << "\x1b[0m";
+    //pixel << "\x1b[38;2;" << (int)colour[2] << ";" << (int)colour[1] << ";" << (int)colour[0] << "m" << glyph << "\x1b[0m";
+    //alternate method of colouring the screen by setting background colour
+    pixel << "\e[48;2;" << (int)colour[2] << ";" <<(int) colour[1] << ";" << (int) colour[0] <<"m ";
     return pixel.str();
 }
 
