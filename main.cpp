@@ -117,8 +117,12 @@ int main(int argc, char *argv[]) {
 
 
         if (interactive) {
+            imgHeight = img.size().height;
+            imgWidth= img.size().width;
             userInput(&frame, &panX, &panY, &zoom_ratio, imgWidth, imgHeight);
-            cout <<"\033c";
+            if(preserveAspectRatio) {
+                cout << "\033c";
+            }
         }
 
     } while (ft == VID || interactive);

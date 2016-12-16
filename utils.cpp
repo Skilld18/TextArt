@@ -168,9 +168,13 @@ void userInput(int *frame, int *panX, int *panY, float *zoom_ratio, int imgWidth
         //TODO:: This needs a better bounds check. I think the error is related to zooming past image size
     else if(input=='+'){
         *zoom_ratio = max(0.05, *zoom_ratio/1.5);
+        *panX += imgWidth * *zoom_ratio / 4;
+        *panY += imgHeight* *zoom_ratio / 4;
     }
     else if(input=='-'){
         *zoom_ratio = min(1.0, *zoom_ratio*1.5);
+        *panX -= imgWidth * *zoom_ratio / 4;
+        *panY -= imgHeight* *zoom_ratio / 4;
     }
     else if(input=='q'||input=='e'){
         exit(0);
