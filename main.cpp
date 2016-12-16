@@ -6,12 +6,7 @@
 
 
 
-//TODO:: Attempt to compensate for font width vs height
-//TODO:: Add a preserve aspect ratio
-
 //Scaling and transform variables
-float fontHeight = 1.0;
-float fontWidth = 0.6;
 float zoom_ratio = 1.0;
 int panX = 0;
 int panY = 0;
@@ -92,7 +87,6 @@ int main(int argc, char *argv[]) {
             cout << "That's not a valid file!" << endl;
             return 1;
         }
-        //TODO:: Make the zoomin go straight in to center
         if (ft != TXT) {
             int rw = img.size().width * zoom_ratio;
             int rh = img.size().height* zoom_ratio;

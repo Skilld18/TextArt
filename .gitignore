@@ -10,3 +10,5 @@ CMakeCache.txt
 CMakeFiles
 *.pdf
 draw.cbp
+*.a
+*.cbp
