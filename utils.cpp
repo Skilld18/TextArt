@@ -28,9 +28,9 @@ string getFileExt(const string &s) {
     return ("");
 }
 
-bool contains(string s1, const string s2[]) {
-    for (int i = 0; i < s2->size(); i++) {
-        if (s2[0].find(s1) != string::npos) {
+bool contains(string s1, vector<string> s2) {
+    for (int i = 0; i < s2.size(); i++) {
+        if (s2[i].find(s1) != string::npos) {
             return true;
         }
     }
@@ -115,7 +115,7 @@ string setOptions(vector<string> args, bool *preserveAspectRatio, bool *interact
         else if(args.at(i)=="-dir"){
             *fileType = DIR;
         }
-        else if(args.at(i)=="-dir"){
+        else if(args.at(i)=="-txt"){
             *fileType = TXT;
         }
         else if(args.at(i)[0] != '-' && filename == ""){
@@ -145,22 +145,28 @@ void userInput(int *frame, int *panX, int *panY, float *zoom_ratio, int imgWidth
         *frame -= 1;
     }
     else if(input=='j'){
-        *panY += imgHeight/2;
+        *panY += 100;
     }
     else if(input=='k') {
-        *panY -= imgHeight/2;
+        *panY -= 100;
     }
     else if(input=='h'){
-        *panX-= imgWidth/2;
+        *panX-= 100;
     }
     else if(input=='l'){
-        *panY-= imgWidth/2;
+        *panX+= 100;
+    }
+        //TODO:: This needs a better bounds check. I think the error is related to zooming past image size
+    else if(input=='+'){
+        *zoom_ratio = max(0.05, *zoom_ratio/1.5);
     }
     else if(input=='-'){
-        *zoom_ratio /= 1.5;
+        *zoom_ratio = min(1.0, *zoom_ratio*1.5);
     }
-    else if(input=='+'){
-        *zoom_ratio *= 1.5;
+    else if(input=='q'||input=='e'){
+        exit(0);
     }
 }
-
+int bound(int low, int num, int high){
+    return min(max(low, num), high);
+}

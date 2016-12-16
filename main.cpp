@@ -29,7 +29,7 @@ string charAtPos(int i, int j) {
     if (i < 5 && j < 5) {
         return "t";
     }
-    return "x";
+    return "";
 }
 
 //TODO:: Get data on render time
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     //Setup Screen
     int termWidth, termHeight;
     getTerminalSize(termWidth, termHeight);
-//    system("setterm -cursor off");
+    //    system("setterm -cursor off");
     //    system ("/bin/stty cooked");
     //    system("export PS1=\"\"");
 
@@ -68,8 +68,6 @@ int main(int argc, char *argv[]) {
     }
 
     do {
-        //Initializing files so they will work with the program
-        //TODO:: Some times the Video Jumps up and down a line fix that
         //TODO:: Is performance improved if the whole video is loaded into a buffer?
         if (ft == VID) {
             bool success = capture.read(img);
@@ -86,21 +84,22 @@ int main(int argc, char *argv[]) {
             char buffer[10];
             snprintf(buffer, 10, "%d", frame);
             img = imread("tmp-" + (string) buffer + ".png", CV_LOAD_IMAGE_COLOR);
-            frame++;
-        }
-        else if (ft == IMG) {
+        } else if (ft == IMG) {
             img = imread(filename, CV_LOAD_IMAGE_COLOR);
-        }
-        else if (ft == TXT) {
+        } else if (ft == TXT) {
             printFile(filename, frame * termHeight, (frame + 1) * termHeight);
-        }
-        else {
+        } else {
             cout << "That's not a valid file!" << endl;
             return 1;
         }
+        //TODO:: Make the zoomin go straight in to center
         if (ft != TXT) {
-            //TODO:: Get ROI rectangle
-            resize(img, dst, Size(termWidth, termHeight));
+            int rw = img.size().width * zoom_ratio;
+            int rh = img.size().height* zoom_ratio;
+            panX = bound(0,panX, img.size().width-rw);
+            panY = bound(0,panY, img.size().height-rh);
+            Mat roi = img(Rect(panX, panY, rw, rh));
+            resize(roi, dst, Size(termWidth, termHeight));
             cout << matToPixels(dst, charAtPos);
             if (writeToFile) {
                 char buffer[10];
