@@ -132,6 +132,15 @@ string setOptions(vector<string> args, bool *preserveAspectRatio, bool *interact
             *writeToFile= true;
         }
     }
+
+    fstream filestr;
+    filestr.open (filename);
+    if (!filestr.is_open())
+    {
+        cout << "File does not exist or cannot be opened\n";
+        exit(1);
+    }
+    filestr.close();
     return filename;
 }
 
