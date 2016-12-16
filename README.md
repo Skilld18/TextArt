@@ -9,11 +9,11 @@ INSTALL
 sudo ln -s `pwd`/draw /usr/bin/draw
 
 Example usage:
-![sunflower](sunflower.jpg)
+![sunflower](https://raw.githubusercontent.com/Skilld18/TextArt/master/sunflowers.jpg)
 can be displayed in the terminal like this:
 draw sunflower.jpg -par
 
-![sunflower-screenshot](sunflower-screenshot.jpg)
+![sunflower-screenshot](https://raw.githubusercontent.com/Skilld18/TextArt/master/sunflowers-screenshot.png)
 
 Flags
 -image, -doc, -dir, -txt        force filetype
