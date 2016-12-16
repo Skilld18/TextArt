@@ -27,7 +27,7 @@ using namespace ::std;
 //Example for passing in a function that can use different strings in the picture
 string charAtPos(int i, int j) {
     if (i < 5 && j < 5) {
-        return "t";
+        return "";
     }
     return "";
 }
@@ -99,7 +99,11 @@ int main(int argc, char *argv[]) {
             panX = bound(0,panX, img.size().width-rw);
             panY = bound(0,panY, img.size().height-rh);
             Mat roi = img(Rect(panX, panY, rw, rh));
-            resize(roi, dst, Size(termWidth, termHeight));
+            float par = 1.0;
+            if(preserveAspectRatio){
+                par = 0.6;
+            }
+            resize(roi, dst, Size(termWidth*par, termHeight));
             cout << matToPixels(dst, charAtPos);
             if (writeToFile) {
                 char buffer[10];
@@ -114,6 +118,7 @@ int main(int argc, char *argv[]) {
 
         if (interactive) {
             userInput(&frame, &panX, &panY, &zoom_ratio, imgWidth, imgHeight);
+            cout <<"\033c";
         }
 
     } while (ft == VID || interactive);
