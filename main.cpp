@@ -78,7 +78,13 @@ int main(int argc, char *argv[]) {
             system(cmd.c_str());
             char buffer[10];
             snprintf(buffer, 10, "%d", frame);
-            img = imread("tmp-" + (string) buffer + ".png", CV_LOAD_IMAGE_COLOR);
+            //if there is multiple files
+            filename= "tmp-" + (string) buffer + ".png";
+            if(!fileExists(filename)){
+                //if there is just one file
+                filename = "tmp.png";
+            }
+            img = imread(filename, CV_LOAD_IMAGE_COLOR);
         } else if (ft == IMG) {
             img = imread(filename, CV_LOAD_IMAGE_COLOR);
         } else if (ft == TXT) {

@@ -18,6 +18,7 @@ enum FileType{
 const vector<string> image_types = {".jpg", ".png"};
 const vector<string> vid_types = {".mp4", ".avi"};
 const vector<string> doc_types = {".pdf", ".doc"};
+bool fileExists(const std::string &name);
 FileType getFileType(string filename);
 void printFile(string filename, int start, int end);
 void getTerminalSize(int &termWidth, int &termHeight);
