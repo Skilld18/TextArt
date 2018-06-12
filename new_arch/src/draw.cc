@@ -9,9 +9,10 @@
 
 void draw(char *filename) 
 {
-    auto mat = cv::imread(filename);
-    cv::Size size(30,30);
-    resize(mat, mat, size);
+    auto old = cv::imread(filename);
+    cv::Mat mat;
+    resize(old,mat,getTerminalSize());
+
 
     auto cs = bash24();
 //    auto cs = html();
