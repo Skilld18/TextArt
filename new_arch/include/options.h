@@ -3,13 +3,30 @@
 
 #include <vector>
 #include <ios>
+#include "colourspace.h"
+#include "transform.h"
 
 class Options
 {
 public:
-    bool preserveAspectRatio = false;
-    int height = -1;
-    int width = -1;
+
+    //sizing
+    static bool preserveAspectRatio;
+    static int height;
+    static int width;
+
+    //media type
+    enum Type {IMAGE, TEXT, DOCUMENT, AUDIO, VIDEO};
+    static Type type;
+
+    static bool interactive;
+
+    //simple transforms applied
+    static std::vector<transform> transforms;
+
+    //output mode
+    static colourspace *cs;
+
 };
 
 #endif //LIBDRAW_OPTIONS_H

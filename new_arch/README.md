@@ -10,3 +10,4 @@ interactive mode
 testing
 performannce
 avoird or warn req cv
+add a lib to check capapbilites

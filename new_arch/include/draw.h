@@ -2,10 +2,11 @@
 #define LIBDRAW_H
 
 
-void draw(char *filename);
+#include "colourspace.h"
+#include "opencv2/opencv.hpp"
 
 
-
+void draw(cv::Mat mat);
 
 
 #endif

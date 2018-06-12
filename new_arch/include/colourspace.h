@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <ios>
+#include "opencv2/opencv.hpp"
 
 class colourspace
 {
@@ -23,10 +24,7 @@ public:
     int channelCount = 3;
 
 
-    std::string convertPixel(cv::Vec3b pixel)
-    {
-        return "";
-    }
+    virtual std::string convertPixel(cv::Vec3b pixel) = 0;
 };
 
 #endif //LIBDRAW_COLOURSPACE_H

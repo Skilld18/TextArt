@@ -3,7 +3,8 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(OpenCV REQUIRED)
 project(draw VERSION 2.0)
 
-set(SOURCE_FILES 
+set(SOURCE_FILES
+src/utils.cc
 src/draw.cc
 example/main.cc)
 
