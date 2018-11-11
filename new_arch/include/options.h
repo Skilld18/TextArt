@@ -14,12 +14,12 @@ public:
     static bool preserveAspectRatio;
     static int height;
     static int width;
+    static bool interactive;
 
     //media type
     enum Type {IMAGE, TEXT, DOCUMENT, AUDIO, VIDEO};
     static Type type;
 
-    static bool interactive;
 
     //simple transforms applied
     static std::vector<transform> transforms;

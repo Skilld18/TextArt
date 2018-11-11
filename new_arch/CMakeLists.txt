@@ -1,3 +1,4 @@
+project(draw)
 cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 14)
 find_package(OpenCV REQUIRED)
