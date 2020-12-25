@@ -1,7 +1,12 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.16)
 project(draw)
-find_package(OpenCV REQUIRED )
-set (CMAKE_CXX_STANDARD 11)
-add_library(textart image.cpp utils.cpp utils.h image.h)
-add_executable(draw main.cpp)
-target_link_libraries(draw ${OpenCV_LIBS} textart)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+find_package(OpenCV REQUIRED)
+
+add_subdirectory(src)
+add_subdirectory(apps)
+add_subdirectory(tests)
+
+
