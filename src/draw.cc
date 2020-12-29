@@ -1,4 +1,14 @@
-int draw()
+#include <draw/draw.h>
+
+int draw(Options options, std::string Filename)
 {
-    return 1;
+    if (Filename.empty())
+    {
+        return 3;
+    }
+    if (!options.is_initialized())
+    {
+        return 4;
+    }
+    return 0;
 }

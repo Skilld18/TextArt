@@ -1,12 +1,12 @@
 #include <map>
-
+#pragma once
 class Options
 {
 public:
 
     enum Type {IMAGE, TEXT, DOCUMENT, AUDIO, VIDEO};
 
-    enum ColourSpace {BASH8, BASH24, HTML};
+    enum ColourSpace {BIN, BASH8, BASH24, HTML};
 
     enum OutputMode {BW, COLOUR};
     

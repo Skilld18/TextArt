@@ -133,6 +133,7 @@ TEST(OptionsTests, ColourSpace) // NOLINT
     Options::ColourSpace t = Options::BASH24;
     switch (t)
     {
+    case Options::BIN:
     case Options::BASH8:
     case Options::BASH24:
     case (Options::ColourSpace) last_enum:
