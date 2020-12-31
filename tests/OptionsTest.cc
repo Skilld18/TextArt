@@ -2,34 +2,33 @@
 #include <gtest/gtest.h>
 #include <climits>
 
-const char * const settingsList[] = {
-"aspectRatio",
-"interactive",
-"height",
-"width",
-"type",
-"colourSpace",
-"outputMode"
+const char *const settingsList[] = {
+    "aspectRatio",
+    "interactive",
+    "height",
+    "width",
+    "type",
+    "colourSpace",
+    "outputMode"
 };
 
 TEST (OptionsTests, HowManyOptions) // NOLINT
 {
-    class TesterClass : public Options
+    class TesterClass: public Options
     {
     public:
         std::map<std::string, int> get_options()
         {
             return options;
         }
-        
+
     };
 
     TesterClass tester;
     Options options;
     auto dict = tester.get_options();
     std::map<std::string, int> mock;
-    for (const auto &option : settingsList)
-    {
+    for (const auto &option : settingsList) {
         mock[option] = -1;
     }
     EXPECT_EQ(dict, mock);
@@ -79,13 +78,13 @@ TEST (OptionsTests, UsingGetterSetter) // NOLINT
     EXPECT_FALSE(options.get_interactive());
     options.set_interactive(true);
     EXPECT_TRUE(options.get_interactive());
-    
+
     options.set_height(1);
     options.set_height(0);
     EXPECT_EQ(options.get_height(), 0);
     options.set_height(UINT_MAX);
     EXPECT_EQ(options.get_height(), UINT_MAX);
-    
+
     options.set_width(1);
     options.set_width(0);
     EXPECT_EQ(options.get_width(), 0);
@@ -100,21 +99,18 @@ TEST(OptionsTests, Type) // NOLINT
     const int last_enum = Options::VIDEO;
     options.set_type(static_cast<Options::Type>(last_enum));
 
-    for (int i = 0;i<=last_enum;i++)
-    {
+    for (int i = 0; i <= last_enum; i++) {
         options.set_type(static_cast<Options::Type>(i));
         EXPECT_EQ(options.get_type(), i);
     }
 
     Options::Type t = Options::TEXT;
-    switch (t)
-    {
-        case Options::IMAGE:
-        case Options::TEXT:
-        case Options::DOCUMENT:
-        case Options::AUDIO:
-        case (Options::Type) last_enum:
-            break;
+    switch (t) {
+    case Options::IMAGE:
+    case Options::TEXT:
+    case Options::DOCUMENT:
+    case Options::AUDIO:
+    case (Options::Type) last_enum:break;
     }
 }
 
@@ -124,20 +120,17 @@ TEST(OptionsTests, ColourSpace) // NOLINT
     const int last_enum = Options::HTML;
     options.set_colourSpace(static_cast<Options::ColourSpace>(last_enum));
 
-    for (int i = 0;i<=last_enum;i++)
-    {
+    for (int i = 0; i <= last_enum; i++) {
         options.set_colourSpace(static_cast<Options::ColourSpace>(i));
         EXPECT_EQ(options.get_colourSpace(), i);
     }
 
     Options::ColourSpace t = Options::BASH24;
-    switch (t)
-    {
+    switch (t) {
     case Options::BIN:
     case Options::BASH8:
     case Options::BASH24:
-    case (Options::ColourSpace) last_enum:
-        break;
+    case (Options::ColourSpace) last_enum:break;
     }
 }
 
@@ -147,17 +140,14 @@ TEST(OptionsTests, OutputMode) // NOLINT
     const int last_enum = Options::COLOUR;
     options.set_outputMode(static_cast<Options::OutputMode>(last_enum));
 
-    for (int i = 0;i<=last_enum;i++)
-    {
+    for (int i = 0; i <= last_enum; i++) {
         options.set_outputMode(static_cast<Options::OutputMode>(i));
         EXPECT_EQ(options.get_outputMode(), i);
     }
 
     Options::OutputMode t = Options::COLOUR;
-    switch (t)
-    {
+    switch (t) {
     case Options::BW:
-    case (Options::OutputMode) last_enum:
-        break;
+    case (Options::OutputMode) last_enum:break;
     }
 }

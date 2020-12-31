@@ -4,35 +4,47 @@
 #include <opencv4/opencv2/imgcodecs.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
 
-int draw(Options options, std::string Filename)
+std::string draw_pixel(const std::string &glyph)
 {
-    if (Filename.empty())
-    {
+    return glyph;
+}
+
+std::string draw_newline()
+{
+    return "\n";
+}
+
+int draw(Options &options, const std::string &filename)
+{
+    if (Filename.empty()) {
         return 3;
     }
-    if (!options.is_initialized())
-    {
+
+    if (!options.is_initialized()) {
         return 4;
     }
-    cv::Mat img;
-    img = cv::imread(Filename);
-    resize(img, img, cv::Size(static_cast<int>(options.get_width()), static_cast<int>(options.get_height())));
 
-    for (int i=0; i<img.rows; i++)
+    cv::Mat origin;
+    origin = cv::imread(filename);
+    cv::Mat img;
+    const auto s = cv::Size(30, 30);
+    resize(origin, img, s);
+
+    for (int i = 0; i < img.rows; i++)
     {
-        for(int j=0; j<img.cols; j++) 
+        for (int j = 0; j < img.cols; j++)
         {
-            const auto pixel = img.at<cv::Vec3b>(i,j);
+            const auto pixel = img.at<cv::Vec3b>(i, j);
             if (pixel[0] + pixel[1] + pixel[2] < 430)
             {
-               std::cout << 'c';
+                std::cout << draw_pixel("c");
             }
-            else
+            else 
             {
-                std::cout << ' ';
+                std::cout << draw_pixel(" ");
             }
         }
-        std::cout << "\n";
+        std::cout << draw_newline();
     }
 
     return 0;

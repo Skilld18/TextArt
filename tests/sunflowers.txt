@@ -1,0 +1,30 @@
+c                            c
+c                   c        c
+c                    c       c
+c      c       c   ccc       c
+c       c  c cccccc cc    c  c
+c       ccc   ccc  cc  cc cc c
+c      cccc c ccccc     cccc c
+c       ccc cc c cc cc   cc  c
+c      cc c  c ccc cc cc   c c
+c     ccc   ccccccccc  ccc   c
+c  c cccccc  ccccccc  ccc    c
+c   cccccc  c cccccc   cc    c
+c   cccc cccccc  c cc      c c
+c  ccccccc cccc c  c        cc
+c ccccccc c c  c cc cc       c
+c  c cccc ccccc    cc c      c
+c    cc  c ccc  cc cc        c
+c   c   cc  cccc  cc  cc     c
+c    c c  c  c cc c   cc     c
+c      cc  c          c cc   c
+c                    c       c
+c         c          c       c
+c                            c
+c   c          c        c    c
+c                            c
+c                            c
+c                  c         c
+c                c           c
+cc                           c
+c                  c         c

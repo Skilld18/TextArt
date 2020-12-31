@@ -1,6 +1,5 @@
 #include "../apps/parse.h"
 #include <gtest/gtest.h>
-#include <vector>
 
 
 TEST (ParseTests, File) // NOLINT
@@ -8,7 +7,7 @@ TEST (ParseTests, File) // NOLINT
     std::vector<std::string> args;
     Options options;
     std::string data;
-    args.push_back("Filename");
+    args.emplace_back("Filename");
     parse_file(args, data);
     EXPECT_EQ(data, "Filename");
 }
@@ -25,21 +24,21 @@ TEST (ParseTests, options) // NOLINT
     EXPECT_EQ(options.get_type(), Options::IMAGE);
     EXPECT_EQ(options.get_colourSpace(), Options::BIN);
     EXPECT_EQ(options.get_outputMode(), Options::BW);
-    args.push_back("-p");
-    args.push_back("-i");
-    args.push_back("-h40");
-    args.push_back("-w40");
-    args.push_back("--image");
-    args.push_back("--text");
-    args.push_back("--doc");
-    args.push_back("--audio");
-    args.push_back("--video");
-    args.push_back("--bin");
-    args.push_back("--bash8");
-    args.push_back("--bash24");
-    args.push_back("--html");
-    args.push_back("--bw");
-    args.push_back("--colour");
+    args.emplace_back("-p");
+    args.emplace_back("-i");
+    args.emplace_back("-h40");
+    args.emplace_back("-w40");
+    args.emplace_back("--image");
+    args.emplace_back("--text");
+    args.emplace_back("--doc");
+    args.emplace_back("--audio");
+    args.emplace_back("--video");
+    args.emplace_back("--bin");
+    args.emplace_back("--bash8");
+    args.emplace_back("--bash24");
+    args.emplace_back("--html");
+    args.emplace_back("--bw");
+    args.emplace_back("--colour");
     EXPECT_TRUE(parse_options(args, options));
     EXPECT_TRUE(options.get_AspectRatio());
     EXPECT_TRUE(options.get_interactive());
@@ -48,12 +47,12 @@ TEST (ParseTests, options) // NOLINT
     EXPECT_EQ(options.get_type(), Options::VIDEO);
     EXPECT_EQ(options.get_colourSpace(), Options::HTML);
     EXPECT_EQ(options.get_outputMode(), Options::COLOUR);
-    
-    args.push_back("-n");
+
+    args.emplace_back("-n");
     EXPECT_FALSE(parse_options(args, options));
-    args.push_back("-h");
+    args.emplace_back("-h");
     EXPECT_FALSE(parse_options(args, options));
     args.pop_back();
-    args.push_back("-w345w");
+    args.emplace_back("-w345w");
     EXPECT_FALSE(parse_options(args, options));
 }
