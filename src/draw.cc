@@ -16,7 +16,7 @@ std::string draw_newline()
 
 int draw(Options &options, const std::string &filename)
 {
-    if (Filename.empty()) {
+    if (filename.empty()) {
         return 3;
     }
 

@@ -1,4 +1,5 @@
 #include <map>
+#include <string>
 #pragma once
 class Options
 {
@@ -39,24 +40,24 @@ public:
         return static_cast<bool>(options["interactive"]);
     }
 
-    void set_height(const uint height)
+    void set_height(const unsigned int height)
     {
         options["height"] = static_cast<int>(height);
     }
 
-    uint get_height()
+    unsigned int get_height()
     {
-        return static_cast<uint>(options["height"]);
+        return static_cast<unsigned int>(options["height"]);
     }
 
-    void set_width(const uint width)
+    void set_width(const unsigned int width)
     {
         options["width"] = static_cast<int>(width);
     }
 
-    uint get_width()
+    unsigned int get_width()
     {
-        return static_cast<uint>(options["width"]);
+        return static_cast<unsigned int>(options["width"]);
     }
 
     void set_type(const Type t)

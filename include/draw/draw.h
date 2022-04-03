@@ -1,4 +1,5 @@
 #include <draw/options.h>
+#include <string>
 
 
 std::string draw_pixel(const std::string &glyph);

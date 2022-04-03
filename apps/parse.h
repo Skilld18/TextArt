@@ -21,7 +21,7 @@ bool parse_options(std::vector<std::string> &args, Options &options)
         }
         else if (s.substr(0, 2) == "-h") {
             try {
-                options.set_height(static_cast<uint>(atoi(s.substr(2).c_str())));
+                options.set_height(static_cast<unsigned int>(atoi(s.substr(2).c_str())));
             }
             catch (std::exception &e) {
                 return false;
@@ -29,7 +29,7 @@ bool parse_options(std::vector<std::string> &args, Options &options)
         }
         else if (s.substr(0, 2) == "-w") {
             try {
-                options.set_width(static_cast<uint>(atoi(s.substr(2).c_str())));
+                options.set_width(static_cast<unsigned int>(atoi(s.substr(2).c_str())));
             }
             catch (std::exception &e) {
                 return false;
