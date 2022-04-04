@@ -4,9 +4,19 @@
 #include <opencv4/opencv2/imgcodecs.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
 
-std::string draw_pixel(const std::string &glyph)
+std::string draw_pixel(const cv::Vec<unsigned char, 3> vec, const std::string &glyph, const Options::ColourSpace cs)
 {
-    return glyph;
+    std::stringstream pixel;
+    if (cs == Options::BASH24)
+    {
+        pixel << "\033[49m" << "\x1b[38;2;" << (int) vec[2] << ";" << (int) vec[1]
+              << ";" << (int) vec[0] << "m" << glyph << "\x1b[0m";
+    }
+    else
+    {
+        return "f";
+    }
+    return pixel.str();
 }
 
 std::string draw_newline()
@@ -35,17 +45,20 @@ int draw(Options &options, const std::string &filename)
         for (int j = 0; j < img.cols; j++)
         {
             const auto pixel = img.at<cv::Vec3b>(i, j);
-            if (pixel[0] + pixel[1] + pixel[2] < 430)
-            {
-                std::cout << draw_pixel("c");
-            }
-            else 
-            {
-                std::cout << draw_pixel(" ");
-            }
+            std::cout << draw_pixel(pixel, get_glyph(), get_colourspace());
         }
         std::cout << draw_newline();
     }
 
     return 0;
+}
+
+std::string get_glyph()
+{
+    return "\u2588";
+}
+
+Options::ColourSpace get_colourspace()
+{
+    return Options::ColourSpace::BASH24;
 }
