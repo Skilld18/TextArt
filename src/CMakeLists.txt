@@ -1,6 +1,5 @@
 set(headers
         ../include/draw/draw.h
-        ../include/draw/options.h
         )
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})

@@ -7,6 +7,6 @@ add_compile_options(-Wall -Wextra -pedantic -Werror -Wsign-conversion)
 
 add_subdirectory(src)
 add_subdirectory(apps)
-add_subdirectory(tests)
+#add_subdirectory(tests)
 
 
