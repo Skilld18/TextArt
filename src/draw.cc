@@ -26,20 +26,17 @@ int draw(const std::string &filename)
 {
     cv::Mat origin;
     origin = cv::imread(filename);
-    std::cout << origin.at<cv::Vec3b>(0,0) << std::endl; //Fix to load image dimensions
     cv::Mat img;
     resize(origin, img, {0,0}, 1, 0.43);
     origin = img;
     const auto s = getTerminalSize();
-    //TODO::Aspect ratio
-    while (s.width < origin.cols || s.height < origin.rows)
-    {
-        resize(origin, img, {0,0}, 0.90, 0.90);
-        origin = img;
-    }
-    
+    float fx = origin.cols / s.width + 1;
+    float fy = origin.rows / s.height + 1;
+    float f = fx > fy ? fx : fy;
+    int x = fx > fy ? s.width : origin.cols/f;
+    int y = fx > fy ? origin.rows/f : s.height;
+    resize(origin, img, {x,y});
     std::stringstream output;
-
     for (int i = 0; i < img.rows; i++)
     {
         for (int j = 0; j < img.cols; j++)
