@@ -21,6 +21,16 @@ cv::Size getTerminalSize()
     return {w.ws_col, w.ws_row-1};
 }
 
+cv::Size getRescaledSize(cv::Size terminal, cv::Size image)
+{
+    float scale_width = image.width / terminal.width + 1;
+    float scale_height = image.height / terminal.height + 1;
+    float scaling_factor = scale_width > scale_height ? scale_width : scale_height;
+    int width = scale_width > scale_height ? terminal.width : image.width/scaling_factor;
+    int height = scale_width > scale_height ? image.height/scaling_factor : terminal.height;
+    return {width, height};
+}
+
 
 int draw(const std::string &filename)
 {
@@ -29,13 +39,9 @@ int draw(const std::string &filename)
     cv::Mat img;
     resize(origin, img, {0,0}, 1, 0.43);
     origin = img;
-    const auto s = getTerminalSize();
-    float fx = origin.cols / s.width + 1;
-    float fy = origin.rows / s.height + 1;
-    float f = fx > fy ? fx : fy;
-    int x = fx > fy ? s.width : origin.cols/f;
-    int y = fx > fy ? origin.rows/f : s.height;
-    resize(origin, img, {x,y});
+    const auto terminalSize = getTerminalSize();
+    const cv::Size imageSize = {origin.cols, origin.rows};
+    resize(origin, img, getRescaledSize(terminalSize, imageSize));
     std::stringstream output;
     for (int i = 0; i < img.rows; i++)
     {
