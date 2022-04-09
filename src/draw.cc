@@ -23,11 +23,11 @@ cv::Size getTerminalSize()
 
 cv::Size getRescaledSize(cv::Size terminal, cv::Size image)
 {
-    float scale_width = image.width / terminal.width + 1;
-    float scale_height = image.height / terminal.height + 1;
-    float scaling_factor = scale_width > scale_height ? scale_width : scale_height;
-    int width = scale_width > scale_height ? terminal.width : image.width/scaling_factor;
-    int height = scale_width > scale_height ? image.height/scaling_factor : terminal.height;
+    int scale_width = image.width / terminal.width + 1;
+    int scale_height = image.height / terminal.height + 1;
+    int scale = scale_width > scale_height ? scale_width : scale_height;
+    int width = scale_width > scale_height ? terminal.width : image.width/scale;
+    int height = scale_width > scale_height ? image.height/scale: terminal.height;
     return {width, height};
 }
 
