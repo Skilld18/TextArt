@@ -38,7 +38,15 @@ int draw(const std::string &filename)
     cv::Mat origin;
     origin = cv::imread(filename);
     cv::Mat img;
-    resize(origin, img, {0,0}, 1, 0.43);
+    try
+    {
+            resize(origin, img, {0,0}, 1, 0.43);
+    }
+    catch (std::exception &e)
+    { 
+        std::cout << e.what() << " bad image" << std::endl; 
+        return 1;
+    }
     origin = img;
     const auto terminalSize = getTerminalSize();
     const cv::Size imageSize = {origin.cols, origin.rows};
