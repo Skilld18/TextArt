@@ -1,2 +1,4 @@
-add_executable(app main.cc)
-target_link_libraries(app PRIVATE draw)
+add_executable(draw main.cc)
+target_link_libraries(draw PRIVATE libdraw)
+install(TARGETS draw DESTINATION bin)
+
