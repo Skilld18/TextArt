@@ -13,3 +13,6 @@ INSTALL(TARGETS libdraw
         PUBLIC_HEADER DESTINATION /usr/include
 	ARCHIVE DESTINATION /usr/lib
 )
+install(PROGRAMS toimg.sh DESTINATION bin RENAME toimg)
+install(PROGRAMS totext.sh DESTINATION bin RENAME totext)
+install(PROGRAMS topage.sh DESTINATION bin RENAME topage)
