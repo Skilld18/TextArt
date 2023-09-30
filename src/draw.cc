@@ -19,6 +19,18 @@ cv::Size getTerminalSize()
 {
     struct winsize w{};
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    if (w.ws_col < 10)
+    {
+        w.ws_col = 80;
+        std::cout << "Terminal width detection failed defaulting to "
+            << w.ws_col << std::endl;
+    }
+    if (w.ws_row < 10)
+    {
+        w.ws_col = 24;
+        std::cout << "Terminal height detection failed defaulting to "
+            << w.ws_row <<  std::endl;
+    }
     return {w.ws_col, w.ws_row-1};
 }
 
